@@ -8,6 +8,7 @@ import { useCart } from '../context/CartContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Trash2, Plus, Minus, Tag, ShieldCheck, Truck, ShoppingCart, CreditCard, ChevronRight, Sparkles } from 'lucide-react';
 import { Product } from '../types';
+import axios from 'axios';
 
 export const CartDrawer: React.FC = () => {
   const {
@@ -44,6 +45,7 @@ export const CartDrawer: React.FC = () => {
   const [cardName, setCardName] = useState('');
 
   const [formError, setFormError] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleApplyCoupon = (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,7 +79,7 @@ export const CartDrawer: React.FC = () => {
   const taxCharge = currentSubtotal * 0.05; // 5% GST/VAT
   const grandTotal = currentSubtotal - discValue + deliveryCharge + taxCharge;
 
-  const handleShippingSubmit = (e: React.FormEvent) => {
+  const handleShippingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError(null);
 
@@ -86,8 +88,26 @@ export const CartDrawer: React.FC = () => {
       return;
     }
 
-    // Process payment success transition
-    setCheckoutStep('success');
+    setIsProcessing(true);
+
+    // Build purchase payload: map each cart item to { productId, quantity }
+    const purchaseItems = cart.map((item) => ({
+      productId: item.product.id,
+      quantity: item.quantity,
+    }));
+
+    try {
+      await axios.post('/api/purchase', purchaseItems);
+      // Stock deducted successfully — proceed to success screen
+      setCheckoutStep('success');
+    } catch (err: any) {
+      const msg =
+        err?.response?.data?.error ||
+        'Purchase failed. Please try again or contact support.';
+      setFormError(msg);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const handleResetCheckout = () => {
@@ -443,9 +463,10 @@ export const CartDrawer: React.FC = () => {
                     <button
                       id="shipping-pay-btn"
                       type="submit"
-                      className="bg-[#2E7D32] hover:bg-[#1a4a1c] text-white text-xs font-bold py-2.5 rounded-xl text-center cursor-pointer"
+                      disabled={isProcessing}
+                      className="bg-[#2E7D32] hover:bg-[#1a4a1c] disabled:opacity-60 disabled:cursor-not-allowed text-white text-xs font-bold py-2.5 rounded-xl text-center cursor-pointer"
                     >
-                      Authorize Payment
+                      {isProcessing ? 'Processing...' : 'Authorize Payment'}
                     </button>
                   </div>
                 </form>

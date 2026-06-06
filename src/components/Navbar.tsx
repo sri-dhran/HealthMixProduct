@@ -5,7 +5,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
-import { ShoppingCart, Menu, X, Search, Leaf, PhoneCall } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { ShoppingCart, Menu, X, Search, Leaf, PhoneCall, User, LogOut } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface NavbarProps {
@@ -15,9 +17,16 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ onSearchChange, searchValue }) => {
   const { cartCount, setCartOpen } = useCart();
+  const { isLoggedIn, userIdentifier, logout } = useAuth();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -164,6 +173,32 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchChange, searchValue }) =
               </AnimatePresence>
             </button>
 
+            {/* Auth Button — shows Login or User+Logout */}
+            {isLoggedIn ? (
+              <div className="flex items-center gap-2">
+                <span className="hidden md:inline text-xs text-neutral-500 max-w-[120px] truncate">
+                  {userIdentifier}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="p-2 text-neutral-600 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors flex items-center gap-1"
+                  aria-label="Log Out"
+                  title="Log Out"
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="p-2 text-neutral-600 hover:text-[#2E7D32] hover:bg-neutral-100 rounded-full transition-colors relative flex items-center gap-2"
+                aria-label="Login or Sign Up"
+              >
+                <User className="w-5 h-5" />
+                <span className="hidden md:inline text-sm font-medium">Log In</span>
+              </Link>
+            )}
+
             {/* Mobile Hamburger menu */}
             <button
               id="mobile-menu-btn"
@@ -217,6 +252,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchChange, searchValue }) =
                 ))}
                 
                 <div className="pt-4 flex flex-col gap-2">
+                  {isLoggedIn ? (
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-center bg-red-50 text-red-600 py-2.5 px-4 rounded-xl font-medium shadow-sm hover:bg-red-100 transition-colors flex items-center justify-center gap-2"
+                    >
+                      <LogOut className="w-4 h-4" /> Log Out
+                    </button>
+                  ) : (
+                    <Link
+                      to="/login"
+                      className="w-full text-center bg-neutral-100 text-neutral-700 py-2.5 px-4 rounded-xl font-medium shadow-sm hover:bg-neutral-200 transition-colors"
+                    >
+                      Log In / Sign Up
+                    </Link>
+                  )}
                   <a
                     href="#products"
                     onClick={() => handleLinkClick('#products')}
