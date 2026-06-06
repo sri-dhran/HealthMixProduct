@@ -173,12 +173,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchChange, searchValue }) =
               </AnimatePresence>
             </button>
 
-            {/* Auth Button — shows Login or User+Logout */}
             {isLoggedIn ? (
               <div className="flex items-center gap-2">
-                <span className="hidden md:inline text-xs text-neutral-500 max-w-[120px] truncate">
-                  {userIdentifier}
-                </span>
+                <Link to="/profile" className="hidden md:flex items-center gap-2 hover:bg-neutral-100 py-1.5 px-3 rounded-full transition-colors cursor-pointer group">
+                  <div className="w-6 h-6 bg-[#2E7D32] text-white rounded-full flex items-center justify-center text-xs font-bold">
+                    {userIdentifier?.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="text-xs font-medium text-neutral-600 group-hover:text-[#2E7D32] max-w-[120px] truncate">
+                    {userIdentifier}
+                  </span>
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="p-2 text-neutral-600 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors flex items-center gap-1"
@@ -253,12 +257,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchChange, searchValue }) =
                 
                 <div className="pt-4 flex flex-col gap-2">
                   {isLoggedIn ? (
-                    <button
-                      onClick={handleLogout}
-                      className="w-full text-center bg-red-50 text-red-600 py-2.5 px-4 rounded-xl font-medium shadow-sm hover:bg-red-100 transition-colors flex items-center justify-center gap-2"
-                    >
-                      <LogOut className="w-4 h-4" /> Log Out
-                    </button>
+                    <>
+                      <Link
+                        to="/profile"
+                        onClick={() => setIsOpen(false)}
+                        className="w-full text-center bg-white border border-[#2E7D32]/20 text-[#2E7D32] py-2.5 px-4 rounded-xl font-medium shadow-sm hover:bg-[#F9FBE7] transition-colors flex items-center justify-center gap-2"
+                      >
+                        <User className="w-4 h-4" /> My Profile
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-center bg-red-50 text-red-600 py-2.5 px-4 rounded-xl font-medium shadow-sm hover:bg-red-100 transition-colors flex items-center justify-center gap-2"
+                      >
+                        <LogOut className="w-4 h-4" /> Log Out
+                      </button>
+                    </>
                   ) : (
                     <Link
                       to="/login"

@@ -152,4 +152,33 @@ public class AuthController {
         response.put("token", token);
         return ResponseEntity.ok(response);
     }
+
+    // 5. Get User Profile
+    @GetMapping("/me")
+    public ResponseEntity<Map<String, Object>> getProfile(@RequestHeader(value = "Authorization", required = false) String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(401).build();
+        }
+        
+        try {
+            String token = authHeader.substring(7);
+            String identifier = jwtUtil.extractUsername(token);
+            
+            Optional<User> optionalUser = userRepository.findByIdentifier(identifier);
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.status(404).build();
+            }
+            
+            User user = optionalUser.get();
+            Map<String, Object> response = new HashMap<>();
+            response.put("identifier", user.getIdentifier());
+            response.put("role", user.getRole());
+            response.put("createdAt", user.getCreatedAt() != null ? user.getCreatedAt().toString() : null);
+            response.put("isVerified", user.isVerified());
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).build();
+        }
+    }
 }
