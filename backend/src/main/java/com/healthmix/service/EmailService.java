@@ -11,43 +11,48 @@ import java.net.http.HttpResponse;
 @Service
 public class EmailService {
 
-    @Value("${resend.api.key:}")
-    private String resendApiKey;
+    @Value("${brevo.api.key:}")
+    private String brevoApiKey;
 
-    @Value("${resend.from.email:onboarding@resend.dev}")
+    @Value("${brevo.from.email:noreply@healthmix.com}")
     private String fromEmail;
+
+    @Value("${brevo.from.name:HealthMix}")
+    private String fromName;
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
     public void sendOtpEmail(String toEmail, String otp) throws Exception {
-        if (resendApiKey == null || resendApiKey.isBlank()) {
-            throw new IllegalStateException("Resend API key not configured (RESEND_API_KEY env var)");
+        if (brevoApiKey == null || brevoApiKey.isBlank()) {
+            throw new IllegalStateException("Brevo API key not configured (BREVO_API_KEY env var)");
         }
 
         String htmlContent = buildHtmlEmail(otp);
 
-        // Build JSON safely
+        // Brevo API v3 JSON payload
         String jsonBody = "{"
-                + "\"from\":\"HealthMix <" + escapeJson(fromEmail) + ">\","
-                + "\"to\":[\"" + escapeJson(toEmail) + "\"],"
+                + "\"sender\":{\"name\":\"" + escapeJson(fromName) + "\",\"email\":\"" + escapeJson(fromEmail) + "\"},"
+                + "\"to\":[{\"email\":\"" + escapeJson(toEmail) + "\"}],"
                 + "\"subject\":\"Your HealthMix Verification Code\","
-                + "\"html\":\"" + escapeJson(htmlContent) + "\""
+                + "\"htmlContent\":\"" + escapeJson(htmlContent) + "\""
                 + "}";
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.resend.com/emails"))
-                .header("Authorization", "Bearer " + resendApiKey)
+                .uri(URI.create("https://api.brevo.com/v3/smtp/email"))
+                .header("api-key", brevoApiKey)
                 .header("Content-Type", "application/json")
+                .header("Accept", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
-            throw new RuntimeException("Resend API error " + response.statusCode() + ": " + response.body());
+            System.err.println("Brevo API error " + response.statusCode() + ": " + response.body());
+            throw new RuntimeException("Brevo API error " + response.statusCode() + ": " + response.body());
         }
 
-        System.out.println("✅ Email sent via Resend to " + toEmail + " (status " + response.statusCode() + ")");
+        System.out.println("✅ OTP email sent via Brevo to " + toEmail + " (status " + response.statusCode() + ")");
     }
 
     private String escapeJson(String value) {
@@ -85,7 +90,7 @@ public class EmailService {
                 + "</div>"
                 + "<p>Enter this code in the app to verify your email. If you did not request this, please ignore this email.</p>"
                 + "</div>"
-                + "<div class='footer'><p>2024 HealthMix. All rights reserved.</p></div>"
+                + "<div class='footer'><p>&copy; 2024 HealthMix. All rights reserved.</p></div>"
                 + "</div></body></html>";
     }
 }
