@@ -22,10 +22,10 @@ import { CartDrawer } from './components/CartDrawer';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { BackToTop } from './components/BackToTop';
 
-// Use direct public static paths for our generated PNG assets to satisfy TS tsc compiler
-const heroImage = '/src/assets/images/hero_product_package_1780714500798.png';
-const bowlImage = '/src/assets/images/bowl_of_mix_1780714517869.png';
-const familyImage = '/src/assets/images/family_breakfast_1780714534261.png';
+// Import generated PNG assets
+import heroImage from './assets/images/hero_product_package_1780714500798.png';
+import bowlImage from './assets/images/bowl_of_mix_1780714517869.png';
+import familyImage from './assets/images/family_breakfast_1780714534261.png';
 
 function AppContent() {
   const [searchValue, setSearchValue] = useState('');
