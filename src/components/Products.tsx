@@ -8,6 +8,7 @@ import { useCart } from '../context/CartContext';
 import { PRODUCTS } from '../data';
 import { Product } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
+import { getImageUrl } from '../utils/imageUrl';
 import { Star, Flame, ShoppingCart, Percent, ClipboardSignature, Search, RefreshCw, Sparkles } from 'lucide-react';
 
 interface ProductsProps {
@@ -206,7 +207,7 @@ export const Products: React.FC<ProductsProps> = ({ searchValue, onSearchChange 
                   {/* Thumbnail / Image with Hover details block */}
                   <div className="relative aspect-4/3 overflow-hidden bg-neutral-100 shrink-0">
                     <img
-                      src={product.image}
+                      src={getImageUrl(product.image)}
                       alt={product.name}
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover select-none group-hover:scale-105 transition-transform duration-500"

@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X, Trash2, Plus, Minus, Tag, ShieldCheck, Truck, ShoppingCart, CreditCard, ChevronRight, Sparkles } from 'lucide-react';
 import { Product } from '../types';
 import axios from 'axios';
+import { getImageUrl } from '../utils/imageUrl';
 
 export const CartDrawer: React.FC = () => {
   const {
@@ -204,7 +205,7 @@ export const CartDrawer: React.FC = () => {
                             >
                               <div className="w-16 h-16 rounded-xl overflow-hidden shadow-sm bg-neutral-100 shrink-0 border border-neutral-100">
                                 <img
-                                  src={item.product.image}
+                                  src={getImageUrl(item.product.image)}
                                   alt={item.product.name}
                                   referrerPolicy="no-referrer"
                                   className="w-full h-full object-cover"
