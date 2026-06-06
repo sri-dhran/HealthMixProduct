@@ -43,17 +43,16 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         // Seed default products stock
-        seedProduct("prod-classic", "Classic Health Mix", 500, 420);
-        seedProduct("prod-kids", "Sprouted Kids Health Mix", 300, 280);
-        seedProduct("prod-millet", "Multi Millet Health Mix", 250, 195);
-        seedProduct("prod-protein", "Active Protein Health Mix", 150, 110);
+        seedProduct("prod-classic", "Manna Health Mix", 500, 420);
+        seedProduct("prod-kids", "Sweet Karam Coffee Millet Health Mix", 300, 280);
+        seedProduct("prod-millet", "Organic Health Mix", 250, 195);
+        seedProduct("prod-protein", "Aachi Health Mix 200g", 150, 110);
     }
 
     private void seedProduct(String id, String name, Integer total, Integer available) {
-        if (productRepository.findById(id).isEmpty()) {
-            Product p = new Product(id, name, total, available);
-            productRepository.save(p);
-            System.out.println("✅ Seeded product stock: " + name);
-        }
+        Product p = productRepository.findById(id).orElseGet(() -> new Product(id, name, total, available));
+        p.setName(name);
+        productRepository.save(p);
+        System.out.println("✅ Seeded/Updated product stock: " + name);
     }
 }

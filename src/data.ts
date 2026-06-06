@@ -7,20 +7,19 @@ import { Product, Ingredient, Recipe, Review } from './types';
 
 export const BRAND_NAME = "NutriMix";
 
-export const PRODUCTS: Product[] = [
   {
     id: "prod-classic",
-    name: "Classic Health Mix",
+    name: "Manna Health Mix",
     category: "classic",
-    tagline: "The Traditional Multigrain Porridge Powder",
-    description: "A wholesome multi-grain blend formulated from 15+ traditional grains, millets, pulses, and dry nuts. Rich in daily nutrients for the ultimate breakfast energy.",
-    detailedDescription: "NutriMix Classic Health Mix is an age-old premium formulation crafted using state-of-the-art hygienic processing. Handpicked grains are slow-roasted to bring out rich, nostalgic aromas, then finely milled to ensure easy digestion. Excellent for children starting solid foods, active teenagers, busy adults, and seniors needing easy yet nutrient-dense daily sustenance.",
+    tagline: "Popular Multigrain & Millet Blend",
+    description: "A multigrain and millet-based nutrition mix suitable for the whole family. Extremely popular across Tamil Nadu for daily health and energy.",
+    detailedDescription: "Manna Health Mix is a traditional, time-tested combination of millets, cereals, pulses, and nuts. Roasted carefully to retain natural goodness, it is suitable for all ages, making it the perfect family breakfast option. Formulated to provide wholesome nutrition and sustained energy throughout the day.",
     price: 299,
     originalPrice: 399,
     rating: 4.8,
     reviewCount: 1420,
-    image: "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?q=80&w=600&auto=format&fit=crop", // Warm oats/grains porridge
-    benefits: ["Sustained morning energy", "Easily digestible for child & elder stomachs", "Rich in traditional fiber", "No added sugar or artificial pre-mixes"],
+    image: "/images/manna_health_mix.png",
+    benefits: ["Popular across Tamil Nadu", "Multigrain & millet-based nutrition", "Suitable for the entire family", "Available in multiple pack sizes"],
     ingredients: ["Ragi (Finger Millet)", "Bajra", "Jowar", "Wheat", "Green Gram", "Almonds", "Cashews", "Cardamom"],
     nutritionalInfo: {
       servingSize: "30g (Approx. 2-3 tablespoons)",
@@ -35,17 +34,17 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "prod-kids",
-    name: "Sprouted Kids Health Mix",
-    category: "kids",
-    tagline: "Sprouted Millet Energy with Natural Cocoa",
-    description: "Formulated specifically for growing active kids. Incorporates sprouted ragi with enhanced calcium absorbency and a light cocoa hint for delicious taste.",
-    detailedDescription: "Help your child reach their milestones naturally. Sprouting ragi activates natural enzymes, multiplying the bio-available calcium and iron for rapid body bone development. It's lightly sweetened with organic palm candy and a subtle pure cocoa powder that kids adore. Free from preservatives, maltodextrin, or heavy refined sugar.",
+    name: "Sweet Karam Coffee Millet Health Mix",
+    category: "millet",
+    tagline: "Zero Added Sugar & No Preservatives",
+    description: "100% natural millet-based nutrition mix with zero added sugar and no preservatives. Guilt-free traditional wellness.",
+    detailedDescription: "Crafted cleanly by Sweet Karam Coffee, this millet health mix features zero added sugar and absolutely no chemical preservatives. Combining various healthy millets and traditional ingredients, it delivers premium, wholesome nutrition in every serving.",
     price: 349,
     originalPrice: 449,
     rating: 4.9,
     reviewCount: 950,
-    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=600&auto=format&fit=crop", // Healthy bowl child focus
-    benefits: ["High bio-available solid calcium", "Boosts concentration & brain stamina", "Supports strong bones & height growth", "Fussy-eater approved warm cocoa flavor"],
+    image: "/images/sweet_karam_coffee.png",
+    benefits: ["Zero added sugar", "No artificial preservatives or colorings", "Millet-based organic nutrition mix"],
     ingredients: ["Sprouted Ragi", "Wheat", "Green Gram", "Sprouted Moong", "Almonds", "Walnuts", "Cardamom", "Organic Palm Candy"],
     nutritionalInfo: {
       servingSize: "30g (Approx. 2-3 tablespoons)",
@@ -60,17 +59,17 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "prod-millet",
-    name: "Multi Millet Health Mix",
-    category: "millet",
-    tagline: "Gluten-Friendly Low-GI Superfood",
-    description: "Power-packed blend of 5 primary ancient millets. Crafted for blood sugar management, weight regulation, and slow-release sustainable fuel.",
-    detailedDescription: "Return to the roots of sustainable dietary power. Multi Millet Health Mix focuses exclusively on ancient slow-digestive grains like Foxtail, Pearl, Kodo, Barnyard, and Finger Millets. Specially customized for modern adults managing hectic desk-job lifestyles, seeking low-glycemic indexes to control blood sugar spikes, or looking for an ultra-clean gluten-friendly breakfast replacement.",
+    name: "Organic Health Mix",
+    category: "classic",
+    tagline: "Budget-Friendly Organic Ingredients",
+    description: "A cost-effective blend of organic grains and millets. Wholesome nutrition made affordable for everyone.",
+    detailedDescription: "Get the best of nature without breaking the bank. Our Organic Health Mix is made with certified organic ingredients sourced directly from local farms. It provides high fiber and minerals in a budget-friendly package, ensuring healthy living is accessible to all families.",
     price: 329,
     originalPrice: 429,
     rating: 4.7,
     reviewCount: 780,
-    image: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?q=80&w=600&auto=format&fit=crop", // Wooden bowl of dry seeds & grains
-    benefits: ["Ultra-low Glycemic Index", "Gluten-friendly prebiotic fuel", "Keeps you full for 4+ hours", "Aids in cholesterol and weight management"],
+    image: "/images/organic_health_mix.png",
+    benefits: ["100% organic certified ingredients", "Budget-friendly family option", "Rich in dietary fiber and essential minerals"],
     ingredients: ["Ragi (Finger Millet)", "Foxtail Millet", "Bajra (Pearl Millet)", "Jowar (Sorghum)", "Barnyard Millet", "Kodo Millet", "Horse Gram"],
     nutritionalInfo: {
       servingSize: "30g (Approx. 2-3 tablespoons)",
@@ -85,17 +84,17 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "prod-protein",
-    name: "Active Protein Health Mix",
+    name: "Aachi Health Mix 200g",
     category: "protein",
-    tagline: "Naturally High-Protein Plant Power blend",
-    description: "Fortified with natural pulses, roasted nuts, chia, and flaxseeds. Delivers 8g of pure native plant protein per serving without whey side-effects.",
-    detailedDescription: "The ultimate clean fitness repair drink. Crafted for athletic training, post-yoga recovery, and workout fuel. We omit cheap soy isolates and artificial synthetic proteins. Instead, we load this blend with germinated green gram, high-grade almonds, horse gram, and cold-milled flax seeds to supply natural Branched Chain Amino Acids (BCAAs), healthy Omega-3 fats, and high fibers.",
+    tagline: "Easily Available Supermarket Starter Option",
+    description: "An affordable starter pack of the traditional health mix. Easily available in local supermarkets for convenient purchasing.",
+    detailedDescription: "Aachi Health Mix is the perfect introductory pack for those beginning their health mix journey. Conveniently sized at 200g and readily available in all major supermarkets, it offers a quick, nutritious, and extremely affordable breakfast choice.",
     price: 399,
     originalPrice: 499,
     rating: 4.9,
     reviewCount: 540,
-    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=600&auto=format&fit=crop", // Elegant fitness nuts/shake backdrop
-    benefits: ["8g natural plant protein per cup", "Rich in Omega-3 essential fatty acids", "Excellent direct post-workout repair", "Supports lean muscle recovery"],
+    image: "/images/aachi_health_mix.png",
+    benefits: ["Easily available in local supermarkets", "Affordable 200g starter pack", "Quick and simple to prepare"],
     ingredients: ["Roasted Almonds", "Cashews", "Green Gram", "Horse Gram", "Flaxseed", "Chia Seed", "Peanut Powder", "Cardamom"],
     nutritionalInfo: {
       servingSize: "30g (Approx. 2-3 tablespoons)",
