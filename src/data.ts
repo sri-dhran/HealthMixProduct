@@ -7,6 +7,7 @@ import { Product, Ingredient, Recipe, Review } from './types';
 
 export const BRAND_NAME = "NutriMix";
 
+export const PRODUCTS: Product[] = [
   {
     id: "prod-classic",
     name: "Manna Health Mix",
