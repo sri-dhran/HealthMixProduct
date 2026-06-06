@@ -41,9 +41,10 @@ export const Products: React.FC<ProductsProps> = ({ searchValue, onSearchChange 
   };
 
   // Filter & Search Logic
+  // 'kids' tab shows ALL products — all health mixes are suitable for growing kids
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter(product => {
-      const matchCategory = selectedCategory === 'all' || product.category === selectedCategory;
+      const matchCategory = selectedCategory === 'all' || selectedCategory === 'kids' || product.category === selectedCategory;
       const matchSearch = product.name.toLowerCase().includes(searchValue.toLowerCase()) || 
                           product.tagline.toLowerCase().includes(searchValue.toLowerCase()) ||
                           product.description.toLowerCase().includes(searchValue.toLowerCase()) ||
@@ -133,6 +134,25 @@ export const Products: React.FC<ProductsProps> = ({ searchValue, onSearchChange 
           </div>
 
         </div>
+
+        {/* Kids banner — shown when 'For Growing Kids' tab is active */}
+        {selectedCategory === 'kids' && (
+          <div className="mb-8 bg-gradient-to-r from-amber-50 to-emerald-50 border border-amber-200/60 rounded-2xl p-5 flex items-start gap-4">
+            <span className="text-4xl shrink-0">🌱</span>
+            <div>
+              <h3 className="font-extrabold text-neutral-800 text-base mb-1">All 4 Health Mixes — Perfect for Growing Kids!</h3>
+              <p className="text-sm text-neutral-600 leading-relaxed">
+                Every NutriMix blend is crafted with clean, natural ingredients — no preservatives, no artificial colors, no refined sugar. 
+                Rich in <strong>calcium, iron, and dietary fiber</strong>, each mix supports healthy bone growth, brain development, and sustained energy for active children.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-3">
+                {['✅ No Preservatives', '✅ Rich in Calcium', '✅ High Dietary Fiber', '✅ Zero Artificial Colors', '✅ Suitable for All Ages'].map(tag => (
+                  <span key={tag} className="text-xs font-semibold bg-white border border-emerald-200 text-emerald-800 px-2.5 py-1 rounded-full">{tag}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Active search filter states */}
         {searchValue && (
