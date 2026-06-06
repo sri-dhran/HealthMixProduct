@@ -1,0 +1,6 @@
+{
+  "name": "NutriMix",
+  "description": "Premium e-commerce platform for NutriMix, a healthy and organic traditional health mix brand.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
